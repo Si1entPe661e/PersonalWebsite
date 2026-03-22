@@ -1,35 +1,34 @@
 :root {
   --ifm-color-primary: #5b6751;
-  --ifm-color-primary-dark: #4f5a47;
-  --ifm-color-primary-darker: #4a5442;
-  --ifm-color-primary-darkest: #3d4536;
-  --ifm-color-primary-light: #68745d;
-  --ifm-color-primary-lighter: #6e7a63;
-  --ifm-color-primary-lightest: #7f8a73;
-  --ifm-background-color: #fbfaf7;
+  --ifm-color-primary-dark: #516047;
+  --ifm-color-primary-darker: #4d5b43;
+  --ifm-color-primary-darkest: #3f4b37;
+  --ifm-color-primary-light: #657058;
+  --ifm-color-primary-lighter: #6b765d;
+  --ifm-color-primary-lightest: #7b866f;
+  --ifm-background-color: #faf9f6;
   --ifm-background-surface-color: #ffffff;
-  --ifm-navbar-background-color: rgba(251, 250, 247, 0.92);
-  --ifm-footer-background-color: #f6f4ef;
-  --ifm-color-content: #181713;
-  --ifm-color-content-secondary: #5d5a53;
-  --ifm-font-color-base: #181713;
-  --ifm-heading-color: #181713;
+  --ifm-navbar-background-color: rgba(250, 249, 246, 0.9);
+  --ifm-footer-background-color: #f5f3ee;
+  --ifm-color-content: #1a1915;
+  --ifm-color-content-secondary: #5b5852;
+  --ifm-heading-color: #1a1915;
+  --ifm-font-color-base: #1a1915;
   --ifm-font-family-base: "Source Sans 3", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --ifm-font-family-monospace: "IBM Plex Mono", "SFMono-Regular", monospace;
-  --ifm-code-font-size: 94%;
   --ifm-line-height-base: 1.72;
-  --ifm-heading-line-height: 1.05;
+  --ifm-heading-line-height: 1.1;
   --ifm-global-radius: 0;
   --ifm-card-border-radius: 0;
   --ifm-button-border-radius: 0;
   --ifm-menu-color-background-active: rgba(91, 103, 81, 0.08);
   --ifm-menu-color-background-hover: rgba(91, 103, 81, 0.05);
+  --ifm-navbar-shadow: 0 1px 0 rgba(22, 20, 17, 0.06);
   --ifm-toc-border-color: rgba(22, 20, 17, 0.08);
   --ifm-hr-border-color: rgba(22, 20, 17, 0.08);
-  --ifm-navbar-shadow: 0 1px 0 rgba(22, 20, 17, 0.06);
   --ifm-global-shadow-lw: none;
   --ifm-global-shadow-md: none;
-  --ifm-table-stripe-background: rgba(91, 103, 81, 0.03);
+  --ifm-code-font-size: 94%;
   --docusaurus-highlighted-code-line-bg: rgba(91, 103, 81, 0.08);
 }
 
@@ -38,27 +37,33 @@ html {
 }
 
 body {
-  background: #fbfaf7;
+  background: #faf9f6;
 }
 
 .navbar {
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(12px);
 }
 
 .navbar__title {
-  font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
-.theme-doc-sidebar-container,
-.theme-doc-toc-desktop {
-  background: #fcfbf8;
+.navbar-main-site-link {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(22, 20, 17, 0.08);
+  color: var(--ifm-color-content-secondary);
+}
+
+.navbar-main-site-link:hover {
+  color: var(--ifm-color-primary-darkest);
+  text-decoration: none;
 }
 
 .theme-doc-sidebar-container {
   border-right: 1px solid rgba(22, 20, 17, 0.08);
+  background: #fcfbf8;
 }
 
 .theme-doc-toc-desktop {
@@ -66,32 +71,25 @@ body {
 }
 
 .menu {
-  padding: 1rem 0.8rem 1.5rem;
+  padding: 1rem 0.85rem 1.5rem;
 }
 
 .menu__link,
-.table-of-contents__link {
+.table-of-contents__link,
+.pagination-nav__link {
   border-radius: 0;
 }
 
 .menu__link {
-  font-size: 0.98rem;
+  font-size: 0.97rem;
 }
 
 .menu__link--active {
   font-weight: 600;
 }
 
-.table-of-contents {
-  padding-top: 1rem;
-}
-
-.table-of-contents__link {
-  font-size: 0.92rem;
-}
-
 .theme-doc-markdown {
-  max-width: 48rem;
+  max-width: 46rem;
 }
 
 .theme-doc-markdown header + * {
@@ -103,42 +101,31 @@ body {
 .theme-doc-markdown h3,
 .theme-doc-markdown h4 {
   font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
 }
 
 .theme-doc-markdown h1 {
-  font-size: clamp(3rem, 5vw, 4.9rem);
-  line-height: 0.95;
-  margin-bottom: 1rem;
+  font-size: clamp(2.9rem, 5vw, 4.5rem);
+  line-height: 0.98;
 }
 
 .theme-doc-markdown h2 {
-  font-size: 2rem;
-  margin-top: 3.4rem;
+  font-size: 1.95rem;
+  margin-top: 3rem;
 }
 
 .theme-doc-markdown h3 {
-  font-size: 1.4rem;
-  margin-top: 2.2rem;
+  font-size: 1.35rem;
+  margin-top: 2rem;
 }
 
 .theme-doc-markdown p,
 .theme-doc-markdown li {
-  font-size: 1.06rem;
-}
-
-.theme-doc-markdown ul,
-.theme-doc-markdown ol {
-  padding-left: 1.3rem;
-}
-
-.theme-doc-breadcrumbs {
-  margin-bottom: 1rem;
+  font-size: 1.04rem;
 }
 
 .pagination-nav__link {
   border: 1px solid rgba(22, 20, 17, 0.08);
-  border-radius: 0;
   box-shadow: none;
 }
 
@@ -147,11 +134,6 @@ body {
 }
 
 @media (min-width: 997px) {
-  .main-wrapper {
-    background:
-      linear-gradient(to right, #fcfbf8 0, #fcfbf8 18rem, #ffffff 18rem, #ffffff calc(100% - 14rem), #fcfbf8 calc(100% - 14rem), #fcfbf8 100%);
-  }
-
   .container.padding-top--md.padding-bottom--lg {
     padding-top: 2rem !important;
     padding-bottom: 4rem !important;
@@ -161,6 +143,11 @@ body {
 @media (max-width: 996px) {
   html {
     font-size: 16px;
+  }
+
+  .navbar-main-site-link {
+    border: 0;
+    padding: 0.35rem 0;
   }
 
   .theme-doc-markdown {

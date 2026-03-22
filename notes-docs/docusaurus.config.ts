@@ -2,6 +2,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+const mainSiteUrl = process.env.MAIN_SITE_URL ?? 'https://example.com/';
+
 const config: Config = {
   title: 'Li Zhicheng Notes',
   tagline: 'Economics, mathematics, and programming notes arranged as a durable working library.',
@@ -57,6 +59,12 @@ const config: Config = {
           sidebarId: 'notesSidebar',
           position: 'left',
           label: 'Library',
+        },
+        {
+          href: mainSiteUrl,
+          label: 'Back to main site',
+          position: 'right',
+          className: 'navbar-main-site-link',
         },
       ],
     },

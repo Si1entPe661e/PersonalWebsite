@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHero from "../../components/listing/SectionHero.astro";
 import EntryList from "../../components/listing/EntryList.astro";
 import { getPublishedCollection, groupNotesBySection } from "../../lib/content";
+import { noteSectionHref } from "../../lib/site";
 
 const notes = await getPublishedCollection("notes");
 const groups = groupNotesBySection(notes);
@@ -23,9 +24,9 @@ const groups = groupNotesBySection(notes);
       <div class="section-lead__aside">
         <span class="kicker">Shelves</span>
         <ul class="section-badges">
-          <li>Economics</li>
-          <li>Mathematics</li>
-          <li>Programming</li>
+          <li><a href={noteSectionHref("economics")}>Economics</a></li>
+          <li><a href={noteSectionHref("mathematics")}>Mathematics</a></li>
+          <li><a href={noteSectionHref("programming")}>Programming</a></li>
         </ul>
       </div>
     </div>
@@ -34,7 +35,7 @@ const groups = groupNotesBySection(notes);
       {
         groups.map((group) => (
           <section class="section-panel section-panel--shelf">
-            <div class="kicker">{group.title}</div>
+            <div class="kicker"><a href={noteSectionHref(group.section)}>{group.title}</a></div>
             <EntryList collection="notes" entries={group.items} variant="shelf" />
           </section>
         ))

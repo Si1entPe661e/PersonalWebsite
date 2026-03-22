@@ -3,7 +3,8 @@ export const site = {
   description:
     "An academic homepage for research, paper explainers, notes, essays, and working methods.",
   url: "https://example.com",
-  notesUrl: import.meta.env.PUBLIC_NOTES_URL ?? "/notes/",
+  notesIndexUrl: "/notes/",
+  notesDocsUrl: import.meta.env.PUBLIC_NOTES_DOCS_URL ?? import.meta.env.PUBLIC_NOTES_URL ?? "https://notes.example.com/",
   statement:
     "I study spatial economics, innovation, and the practical craft of doing research with code, notes, and careful reading.",
   role: "Researcher in Economics",
@@ -21,7 +22,7 @@ export const primaryNav = [
   { href: "/", label: "Home" },
   { href: "/research/", label: "Research" },
   { href: "/papers/", label: "Papers" },
-  { href: site.notesUrl, label: "Notes", external: isExternalUrl(site.notesUrl) },
+  { href: site.notesIndexUrl, label: "Notes" },
   { href: "/essays/", label: "Essays" },
   { href: "/blog/", label: "Blog" },
   { href: "/about/", label: "About" },
@@ -30,7 +31,7 @@ export const primaryNav = [
 export const footerLinks = [
   { href: "/about/", label: "About" },
   { href: "/workflow/", label: "Workflow" },
-  { href: site.notesUrl, label: "Notes", external: isExternalUrl(site.notesUrl) },
+  { href: site.notesIndexUrl, label: "Notes" },
   { href: "/rss.xml", label: "RSS" },
   { href: "https://scholar.google.com", label: "Google Scholar", external: true },
   { href: "https://github.com", label: "GitHub", external: true },
@@ -45,10 +46,14 @@ export function entryPath(id: string) {
 export function entryHref(collection: RoutableCollection, id: string) {
   if (collection === "notes") {
     const path = `${entryPath(id)}/`;
-    return isExternalUrl(site.notesUrl) ? new URL(path, ensureTrailingSlash(site.notesUrl)).toString() : `/notes/${path}`;
+    return new URL(path, ensureTrailingSlash(site.notesDocsUrl)).toString();
   }
 
   return `/${collection}/${entryPath(id)}/`;
+}
+
+export function noteSectionHref(section: string) {
+  return new URL(`category/${section}`, ensureTrailingSlash(site.notesDocsUrl)).toString();
 }
 
 export function pageHref(slug: string) {
