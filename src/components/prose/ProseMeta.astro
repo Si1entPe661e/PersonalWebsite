@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatLongDate } from "../../lib/site";
+
+interface Props {
+  entry: CollectionEntry<"research"> | CollectionEntry<"papers"> | CollectionEntry<"notes"> | CollectionEntry<"essays"> | CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props;
+---
+
+<div class="entry-meta">
+  {entry.data.date && <span>{formatLongDate(entry.data.date)}</span>}
+  {entry.data.updated && <span>Updated {formatLongDate(entry.data.updated)}</span>}
+  {entry.data.status && <span>{entry.data.status}</span>}
+  {"paperType" in entry.data && <span>{entry.data.paperType}</span>}
+</div>

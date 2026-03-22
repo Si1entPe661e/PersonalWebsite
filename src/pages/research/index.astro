@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHero from "../../components/listing/SectionHero.astro";
+import EntryList from "../../components/listing/EntryList.astro";
+import { getPublishedCollection } from "../../lib/content";
+
+const research = await getPublishedCollection("research");
+---
+
+<BaseLayout title="Research | Li Zhicheng" description="Research agenda, working papers, and project pages.">
+  <div class="section-shell">
+    <SectionHero
+      eyebrow="Research"
+      title="Projects, questions, and working papers"
+      description="This section holds the slower academic core of the site: research themes, ongoing projects, and working papers that tie the rest of the notebook together."
+    />
+    <EntryList collection="research" entries={research} />
+  </div>
+</BaseLayout>

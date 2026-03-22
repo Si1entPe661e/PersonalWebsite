@@ -1,17 +1,97 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import IntroBand from "../components/home/IntroBand.astro";
+import PrimaryIndex from "../components/home/PrimaryIndex.astro";
+import CurrentWriting from "../components/home/CurrentWriting.astro";
+import NotebookStrip from "../components/home/NotebookStrip.astro";
+import { getPublishedCollection } from "../lib/content";
+import { entryHref, site } from "../lib/site";
 
+const [research, papers, notes, essays, blog] = await Promise.all([
+  getPublishedCollection("research"),
+  getPublishedCollection("papers"),
+  getPublishedCollection("notes"),
+  getPublishedCollection("essays"),
+  getPublishedCollection("blog"),
+]);
+
+const primaryBlocks = [
+  {
+    title: "Research",
+    href: "/research/",
+    description: "Working papers, project notes, and the broader themes that organize current academic work.",
+    entries: research.slice(0, 3).map((entry) => ({ href: entryHref("research", entry.id), title: entry.data.title })),
+  },
+  {
+    title: "Papers",
+    href: "/papers/",
+    description: "Explainers, replications, and reading notes written to make difficult papers more usable.",
+    entries: papers.slice(0, 3).map((entry) => ({ href: entryHref("papers", entry.id), title: entry.data.title })),
+  },
+  {
+    title: "Notes",
+    href: "/notes/",
+    description: "Economics, mathematics, and programming notes arranged like a compact personal library.",
+    entries: notes.slice(0, 3).map((entry) => ({ href: entryHref("notes", entry.id), title: entry.data.title })),
+  },
+];
+
+const featuredEssay = essays[0]
+  ? {
+      href: entryHref("essays", essays[0].id),
+      title: essays[0].data.title,
+      description: essays[0].data.description,
+      label: "Essay",
+    }
+  : undefined;
+
+const notebookItems = [
+  {
+    title: "Replication habits",
+    href: "/papers/replicating-a-spatial-equilibrium-table/",
+    description: "Short records of what breaks, what clarifies, and what survives when a published result is rebuilt from scratch.",
+  },
+  {
+    title: "Claude Code setup",
+    href: "/notes/programming/claude-code-setup/",
+    description: "A practical note on prompts, shell habits, and how coding assistants fit into serious research work.",
+  },
+  {
+    title: "Workflow page",
+    href: "/workflow/",
+    description: "A standing page for tools, file organization, and the routines that keep reading and coding connected.",
+  },
+  {
+    title: "Method notes",
+    href: "/notes/economics/difference-in-differences-checklist/",
+    description: "Compact reference notes for core empirical strategies, checks, and common failure modes.",
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={`${site.title} | Editorial Notebook`} description={site.description}>
+  <div class="site-frame">
+    <IntroBand
+      title={site.title}
+      role={site.role}
+      statement={site.statement}
+      affiliation={site.affiliation}
+      researchAreas={site.researchAreas}
+      currentFocus={site.currentFocus}
+    />
+
+    <PrimaryIndex blocks={primaryBlocks} />
+
+    <CurrentWriting
+      essay={featuredEssay}
+      blogEntries={blog.slice(0, 3).map((entry) => ({
+        href: entryHref("blog", entry.id),
+        title: entry.data.title,
+        description: entry.data.description,
+        label: "Note",
+      }))}
+    />
+
+    <NotebookStrip items={notebookItems} />
+  </div>
+</BaseLayout>

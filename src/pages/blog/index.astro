@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHero from "../../components/listing/SectionHero.astro";
+import EntryList from "../../components/listing/EntryList.astro";
+import { getPublishedCollection } from "../../lib/content";
+
+const blog = await getPublishedCollection("blog");
+---
+
+<BaseLayout title="Blog | Li Zhicheng" description="Short updates, project notes, and build logs.">
+  <div class="section-shell">
+    <SectionHero
+      eyebrow="Blog"
+      title="Shorter updates and build logs"
+      description="The blog is lighter on ceremony. It is for movement, experimentation, and brief records of what changed or what became newly interesting."
+    />
+    <EntryList collection="blog" entries={blog} />
+  </div>
+</BaseLayout>

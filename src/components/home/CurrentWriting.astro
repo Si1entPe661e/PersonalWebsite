@@ -1,0 +1,43 @@
+---
+interface WritingEntry {
+  href: string;
+  title: string;
+  description: string;
+  label: string;
+}
+
+interface Props {
+  essay?: WritingEntry;
+  blogEntries: WritingEntry[];
+}
+
+const { essay, blogEntries } = Astro.props;
+---
+
+<section class="home-section">
+  <div class="section-heading">
+    <div class="eyebrow">Current writing</div>
+    <h2>Longer arguments and lighter dispatches</h2>
+    <p>Essays carry the slower, more reflective pieces. The blog remains a place for movement, iteration, and short field notes.</p>
+  </div>
+
+  <div class="writing-grid">
+    {essay && (
+      <article class="writing-card">
+        <div class="kicker">{essay.label}</div>
+        <h3>
+          <a href={essay.href}>{essay.title}</a>
+        </h3>
+        <p>{essay.description}</p>
+      </article>
+    )}
+
+    <div class="section-panel">
+      <div class="kicker">Blog</div>
+      <h3>Recent notebook entries</h3>
+      <div class="entry-links">
+        {blogEntries.map((entry) => <a href={entry.href}><span>{entry.title}</span><span>{entry.label}</span></a>)}
+      </div>
+    </div>
+  </div>
+</section>

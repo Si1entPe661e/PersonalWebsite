@@ -1,0 +1,44 @@
+---
+interface EntryLink {
+  href: string;
+  title: string;
+}
+
+interface Block {
+  title: string;
+  href: string;
+  description: string;
+  entries: EntryLink[];
+}
+
+interface Props {
+  blocks: Block[];
+}
+
+const { blocks } = Astro.props;
+---
+
+<section class="home-section">
+  <div class="section-heading">
+    <div class="eyebrow">Primary index</div>
+    <h2>Three main paths through the archive</h2>
+    <p>The front door is editorial, but the archive is built to support deep reading, slow note-taking, and ongoing research work.</p>
+  </div>
+
+  <div class="index-grid">
+    {
+      blocks.map((block) => (
+        <article class="index-card">
+          <div class="kicker">{block.title}</div>
+          <h3>
+            <a href={block.href}>{block.title}</a>
+          </h3>
+          <p>{block.description}</p>
+          <div class="entry-links">
+            {block.entries.map((entry) => <a href={entry.href}><span>{entry.title}</span><span>Read</span></a>)}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

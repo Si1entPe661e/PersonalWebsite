@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHero from "../../components/listing/SectionHero.astro";
+import EntryList from "../../components/listing/EntryList.astro";
+import { getPublishedCollection, groupNotesBySection } from "../../lib/content";
+
+const notes = await getPublishedCollection("notes");
+const groups = groupNotesBySection(notes);
+---
+
+<BaseLayout title="Notes | Li Zhicheng" description="A small academic library of economics, mathematics, and programming notes.">
+  <div class="section-shell">
+    <SectionHero
+      eyebrow="Notes"
+      title="A compact library for economics, mathematics, and code"
+      description="Notes are organized less like a chronological blog and more like shelves in a working library. Each shelf can grow into a longer book-shaped path over time."
+    />
+
+    <div class="section-grid">
+      {
+        groups.map((group) => (
+          <section class="section-panel">
+            <div class="kicker">{group.title}</div>
+            <EntryList collection="notes" entries={group.items} />
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

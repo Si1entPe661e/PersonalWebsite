@@ -1,0 +1,34 @@
+---
+interface Item {
+  title: string;
+  href: string;
+  description: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<section class="home-section">
+  <div class="section-heading">
+    <div class="eyebrow">Research notebook</div>
+    <h2>Methods, replications, and working habits</h2>
+    <p>This strip is where the site leans toward a lab notebook: replication notes, tool choices, and the practical systems behind academic work.</p>
+  </div>
+
+  <div class="notebook-grid">
+    {
+      items.map((item) => (
+        <article class="notebook-card">
+          <h3>
+            <a href={item.href}>{item.title}</a>
+          </h3>
+          <p>{item.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

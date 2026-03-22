@@ -1,0 +1,22 @@
+---
+import { getCollection, render } from "astro:content";
+import NotesLayout from "../../layouts/NotesLayout.astro";
+import { getAdjacentNotes } from "../../lib/content";
+import { entryPath } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("notes", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entryPath(entry.id) },
+    props: { entry, allEntries: entries },
+  }));
+}
+
+const { entry, allEntries } = Astro.props;
+const { Content, headings } = await render(entry);
+const { prev, next } = getAdjacentNotes(allEntries, entry.id);
+---
+
+<NotesLayout entry={entry} headings={headings} prev={prev} next={next}>
+  <Content />
+</NotesLayout>

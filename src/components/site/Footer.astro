@@ -1,0 +1,28 @@
+---
+import { footerLinks, site } from "../../lib/site";
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__top">
+      <div>
+        <div class="site-footer__title">{site.title}</div>
+        <p class="site-footer__note">
+          Research, paper explainers, notes, and essays arranged as an editorial notebook rather than a generic blog.
+        </p>
+      </div>
+
+      <div class="site-footer__links">
+        {
+          footerLinks.map((link) => (
+            <a href={link.href} target={"external" in link ? "_blank" : undefined} rel={"external" in link ? "noreferrer" : undefined}>
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="site-footer__note">Built with Astro and designed to stay calm, legible, and durable as the archive grows.</div>
+  </div>
+</footer>

@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const pages = await getCollection("pages", ({ data }) => !data.draft);
+const entry = pages.find((page) => page.id.replace(/\.(md|mdx)$/u, "") === "workflow");
+
+if (!entry) {
+  throw new Error("Missing workflow page content.");
+}
+
+const { Content, headings } = await render(entry);
+---
+
+<BaseLayout title="Workflow | Li Zhicheng" description={entry.data.description}>
+  <div class="article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <header class="article-header">
+          <div class="eyebrow">Workflow</div>
+          <h1>{entry.data.title}</h1>
+          <p class="article-header__description">{entry.data.description}</p>
+        </header>
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="article-aside">
+        {headings.length > 0 && (
+          <div class="article-panel">
+            <h2>On this page</h2>
+            <ol class="toc-list">
+              {headings.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+            </ol>
+          </div>
+        )}
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

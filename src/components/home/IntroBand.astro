@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  statement: string;
+  role: string;
+  affiliation: string;
+  researchAreas: string[];
+  currentFocus: string;
+}
+
+const { title, statement, role, affiliation, researchAreas, currentFocus } = Astro.props;
+---
+
+<section class="home-section home-hero">
+  <div>
+    <div class="eyebrow">{role}</div>
+    <h1 class="home-hero__title">{title}</h1>
+    <p class="home-hero__lede">{statement}</p>
+  </div>
+
+  <aside class="hero-meta">
+    <div class="hero-meta__item">
+      <span class="hero-meta__label">Affiliation</span>
+      <span class="hero-meta__value">{affiliation}</span>
+    </div>
+    <div class="hero-meta__item">
+      <span class="hero-meta__label">Research areas</span>
+      <span class="hero-meta__value">{researchAreas.join(", ")}</span>
+    </div>
+    <div class="hero-meta__item">
+      <span class="hero-meta__label">Current focus</span>
+      <span class="hero-meta__value">{currentFocus}</span>
+    </div>
+  </aside>
+</section>

@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SectionHero from "../../components/listing/SectionHero.astro";
+import EntryList from "../../components/listing/EntryList.astro";
+import { getPublishedCollection, groupPapersByType } from "../../lib/content";
+
+const papers = await getPublishedCollection("papers");
+const groups = groupPapersByType(papers);
+---
+
+<BaseLayout title="Papers | Li Zhicheng" description="Paper explainers, replications, and reading notes.">
+  <div class="section-shell">
+    <SectionHero
+      eyebrow="Papers"
+      title="Explainers, replications, and reading notes"
+      description="Papers are not treated as finished objects here. They are read, annotated, tested, and sometimes rebuilt so the ideas become usable."
+    />
+
+    <div class="section-grid">
+      {
+        groups.map((group) => (
+          <section class="section-panel">
+            <div class="kicker">{group.title}</div>
+            <EntryList collection="papers" entries={group.items} />
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

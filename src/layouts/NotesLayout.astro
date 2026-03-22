@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import ProseHeader from "../components/prose/ProseHeader.astro";
+import TableOfContents from "../components/prose/TableOfContents.astro";
+import { entryHref, titleCaseSection } from "../lib/site";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  entry: CollectionEntry<"notes">;
+  headings: Heading[];
+  prev?: CollectionEntry<"notes">;
+  next?: CollectionEntry<"notes">;
+}
+
+const { entry, headings, prev, next } = Astro.props;
+---
+
+<BaseLayout title={`${entry.data.title} | Notes`} description={entry.data.description}>
+  <div class="article-shell">
+    <div class="notes-layout">
+      <article class="article-main">
+        <div class="breadcrumbs">Notes / {titleCaseSection(entry.data.section)}</div>
+        <ProseHeader entry={entry} eyebrow="Notes" />
+        <div class="prose">
+          <slot />
+        </div>
+
+        <nav class="notes-pager" aria-label="Adjacent notes">
+          <div>
+            {prev && (
+              <a href={entryHref("notes", prev.id)}>
+                <span class="kicker">Previous</span>
+                <span>{prev.data.title}</span>
+              </a>
+            )}
+          </div>
+          <div>
+            {next && (
+              <a href={entryHref("notes", next.id)}>
+                <span class="kicker">Next</span>
+                <span>{next.data.title}</span>
+              </a>
+            )}
+          </div>
+        </nav>
+      </article>
+
+      <aside class="article-aside">
+        <div class="article-panel">
+          <h2>Notebook lane</h2>
+          <p>This note belongs to the {titleCaseSection(entry.data.section)} shelf and is written to be read as part of a larger archive.</p>
+        </div>
+        <TableOfContents headings={headings} />
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

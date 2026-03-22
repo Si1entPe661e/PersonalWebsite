@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProseMeta from "./ProseMeta.astro";
+
+interface Props {
+  entry: CollectionEntry<"research"> | CollectionEntry<"papers"> | CollectionEntry<"notes"> | CollectionEntry<"essays"> | CollectionEntry<"blog">;
+  eyebrow: string;
+}
+
+const { entry, eyebrow } = Astro.props;
+---
+
+<header class="article-header">
+  <div class="eyebrow">{eyebrow}</div>
+  <h1>{entry.data.title}</h1>
+  <p class="article-header__description">{entry.data.description}</p>
+  <ProseMeta entry={entry} />
+</header>

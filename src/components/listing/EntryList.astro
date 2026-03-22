@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from "astro:content";
+import EntryMeta from "./EntryMeta.astro";
+import { entryHref } from "../../lib/site";
+
+interface Props {
+  collection: "research" | "papers" | "notes" | "essays" | "blog";
+  entries: Array<
+    CollectionEntry<"research"> | CollectionEntry<"papers"> | CollectionEntry<"notes"> | CollectionEntry<"essays"> | CollectionEntry<"blog">
+  >;
+}
+
+const { collection, entries } = Astro.props;
+---
+
+<div class="entry-list">
+  {
+    entries.map((entry) => (
+      <article class="entry-card">
+        <div class="entry-card__top">
+          <span class="kicker">{collection}</span>
+          <EntryMeta entry={entry} />
+        </div>
+        <h3>
+          <a href={entryHref(collection, entry.id)}>{entry.data.title}</a>
+        </h3>
+        <p>{entry.data.description}</p>
+        {entry.data.tags.length > 0 && (
+          <div class="entry-tags">
+            {entry.data.tags.slice(0, 4).map((tag) => <span class="entry-tag">{tag}</span>)}
+          </div>
+        )}
+      </article>
+    ))
+  }
+</div>

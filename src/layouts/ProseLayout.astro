@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import ProseHeader from "../components/prose/ProseHeader.astro";
+import TableOfContents from "../components/prose/TableOfContents.astro";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  entry: CollectionEntry<"papers"> | CollectionEntry<"essays"> | CollectionEntry<"blog">;
+  sectionLabel: string;
+  headings: Heading[];
+}
+
+const { entry, sectionLabel, headings } = Astro.props;
+---
+
+<BaseLayout title={`${entry.data.title} | ${sectionLabel}`} description={entry.data.description}>
+  <div class="article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <ProseHeader entry={entry} eyebrow={sectionLabel} />
+        <div class="prose">
+          <slot />
+        </div>
+      </article>
+
+      <aside class="article-aside">
+        <TableOfContents headings={headings} />
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

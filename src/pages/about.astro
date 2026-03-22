@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { pageHref } from "../lib/site";
+
+const pages = await getCollection("pages", ({ data }) => !data.draft);
+const entry = pages.find((page) => page.id.replace(/\.(md|mdx)$/u, "") === "about");
+
+if (!entry) {
+  throw new Error("Missing about page content.");
+}
+
+const { Content, headings } = await render(entry);
+---
+
+<BaseLayout title="About | Li Zhicheng" description={entry.data.description}>
+  <div class="article-shell">
+    <div class="article-layout">
+      <article class="article-main">
+        <header class="article-header">
+          <div class="eyebrow">About</div>
+          <h1>{entry.data.title}</h1>
+          <p class="article-header__description">{entry.data.description}</p>
+        </header>
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+
+      <aside class="article-aside">
+        <div class="article-panel">
+          <h2>Elsewhere</h2>
+          <div class="research-links">
+            <a href={pageHref("workflow")}>Workflow</a>
+            <a href="/research/">Research</a>
+            <a href="/notes/">Notes</a>
+            <a href="/rss.xml">RSS</a>
+          </div>
+        </div>
+        {headings.length > 0 && (
+          <div class="article-panel">
+            <h2>On this page</h2>
+            <ol class="toc-list">
+              {headings.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+            </ol>
+          </div>
+        )}
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

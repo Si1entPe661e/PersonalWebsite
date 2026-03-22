@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import ProseHeader from "../components/prose/ProseHeader.astro";
+import TableOfContents from "../components/prose/TableOfContents.astro";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  entry: CollectionEntry<"research">;
+  headings: Heading[];
+}
+
+const { entry, headings } = Astro.props;
+---
+
+<BaseLayout title={`${entry.data.title} | Research`} description={entry.data.description}>
+  <div class="article-shell">
+    <div class="research-layout">
+      <article class="article-main">
+        <ProseHeader entry={entry} eyebrow="Research" />
+        <div class="prose">
+          <slot />
+        </div>
+      </article>
+
+      <aside class="article-aside">
+        <div class="article-panel">
+          <h2>Project status</h2>
+          <div class="entry-meta">
+            {entry.data.status && <span>{entry.data.status}</span>}
+            {entry.data.venue && <span>{entry.data.venue}</span>}
+          </div>
+          {entry.data.coauthors.length > 0 && <p><strong>Coauthors:</strong> {entry.data.coauthors.join(", ")}</p>}
+
+          <div class="research-links">
+            {entry.data.projectUrl && <a href={entry.data.projectUrl} target="_blank" rel="noreferrer">Project page</a>}
+            {entry.data.manuscriptUrl && <a href={entry.data.manuscriptUrl} target="_blank" rel="noreferrer">Manuscript</a>}
+            {entry.data.codeUrl && <a href={entry.data.codeUrl} target="_blank" rel="noreferrer">Code</a>}
+            {entry.data.dataUrl && <a href={entry.data.dataUrl} target="_blank" rel="noreferrer">Data</a>}
+          </div>
+        </div>
+
+        <TableOfContents headings={headings} />
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
