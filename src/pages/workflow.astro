@@ -10,11 +10,21 @@ if (!entry) {
 }
 
 const { Content, headings } = await render(entry);
+const sidebarToggleId = "sidebar-toggle-workflow";
 ---
 
 <BaseLayout title="Workflow | Li Zhicheng" description={entry.data.description} theme="notes" pageKind="page">
   <div class="article-shell">
-    <div class="article-layout">
+    <div class="reading-frame">
+      <input class="reading-toggle" id={sidebarToggleId} type="checkbox" />
+      <div class="reading-frame__bar">
+        <label class="reading-toggle__button" for={sidebarToggleId}>
+          <span class="reading-toggle__label reading-toggle__label--collapse">Collapse sidebar</span>
+          <span class="reading-toggle__label reading-toggle__label--expand">Expand sidebar</span>
+        </label>
+      </div>
+
+      <div class="article-layout">
       <article class="article-main">
         <header class="article-header">
           <div class="eyebrow">Workflow</div>
@@ -36,6 +46,7 @@ const { Content, headings } = await render(entry);
           </div>
         )}
       </aside>
+      </div>
     </div>
   </div>
 </BaseLayout>

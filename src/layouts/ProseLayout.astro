@@ -20,11 +20,21 @@ interface Props {
 }
 
 const { entry, sectionLabel, theme, headings, noteTitle, noteBody } = Astro.props;
+const sidebarToggleId = `sidebar-toggle-${theme}`;
 ---
 
 <BaseLayout title={`${entry.data.title} | ${sectionLabel}`} description={entry.data.description} theme={theme} pageKind="detail">
   <div class:list={["article-shell", `article-shell--${theme}`]}>
-    <div class:list={["article-layout", `article-layout--${theme}`]}>
+    <div class="reading-frame">
+      <input class="reading-toggle" id={sidebarToggleId} type="checkbox" />
+      <div class="reading-frame__bar">
+        <label class="reading-toggle__button" for={sidebarToggleId}>
+          <span class="reading-toggle__label reading-toggle__label--collapse">Collapse sidebar</span>
+          <span class="reading-toggle__label reading-toggle__label--expand">Expand sidebar</span>
+        </label>
+      </div>
+
+      <div class:list={["article-layout", `article-layout--${theme}`]}>
       <article class="article-main">
         <ProseHeader entry={entry} eyebrow={sectionLabel} />
         <div class="prose">
@@ -41,6 +51,7 @@ const { entry, sectionLabel, theme, headings, noteTitle, noteBody } = Astro.prop
         )}
         <TableOfContents headings={headings} />
       </aside>
+      </div>
     </div>
   </div>
 </BaseLayout>

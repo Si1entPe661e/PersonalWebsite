@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { pageHref } from "../lib/site";
+import { pageHref, site } from "../lib/site";
 
 const pages = await getCollection("pages", ({ data }) => !data.draft);
 const entry = pages.find((page) => page.id.replace(/\.(md|mdx)$/u, "") === "about");
@@ -11,11 +11,21 @@ if (!entry) {
 }
 
 const { Content, headings } = await render(entry);
+const sidebarToggleId = "sidebar-toggle-about";
 ---
 
 <BaseLayout title="About | Li Zhicheng" description={entry.data.description} theme="about" pageKind="page">
   <div class="article-shell">
-    <div class="article-layout">
+    <div class="reading-frame">
+      <input class="reading-toggle" id={sidebarToggleId} type="checkbox" />
+      <div class="reading-frame__bar">
+        <label class="reading-toggle__button" for={sidebarToggleId}>
+          <span class="reading-toggle__label reading-toggle__label--collapse">Collapse sidebar</span>
+          <span class="reading-toggle__label reading-toggle__label--expand">Expand sidebar</span>
+        </label>
+      </div>
+
+      <div class="article-layout">
       <article class="article-main">
         <header class="article-header">
           <div class="eyebrow">About</div>
@@ -33,7 +43,7 @@ const { Content, headings } = await render(entry);
           <div class="research-links">
             <a href={pageHref("workflow")}>Workflow</a>
             <a href="/research/">Research</a>
-            <a href="/notes/">Notes</a>
+            <a href={site.notesUrl}>Notes</a>
             <a href="/rss.xml">RSS</a>
           </div>
         </div>
@@ -46,6 +56,7 @@ const { Content, headings } = await render(entry);
           </div>
         )}
       </aside>
+      </div>
     </div>
   </div>
 </BaseLayout>

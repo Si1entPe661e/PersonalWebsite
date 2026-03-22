@@ -1,8 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
-import NotesLayout from "../../layouts/NotesLayout.astro";
-import { getAdjacentNotes } from "../../lib/content";
-import { entryPath } from "../../lib/site";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import { getAdjacentNotes, groupNotesBySection } from "../../lib/content";
+import { entryHref, entryPath, titleCaseSection } from "../../lib/site";
 
 export async function getStaticPaths() {
   const entries = await getCollection("notes", ({ data }) => !data.draft);
@@ -15,8 +15,25 @@ export async function getStaticPaths() {
 const { entry, allEntries } = Astro.props;
 const { Content, headings } = await render(entry);
 const { prev, next } = getAdjacentNotes(allEntries, entry.id);
+const navGroups = groupNotesBySection(allEntries).map((group) => ({
+  title: group.title,
+  items: group.items.map((item) => ({
+    href: entryHref("notes", item.id),
+    title: item.data.title,
+    active: item.id === entry.id,
+  })),
+}));
 ---
 
-<NotesLayout entry={entry} headings={headings} prev={prev} next={next}>
+<DocsLayout
+  entry={entry}
+  headings={headings}
+  navGroups={navGroups}
+  sectionLabel="Notes"
+  theme="notes"
+  contextLabel={titleCaseSection(entry.data.section)}
+  pagerPrev={prev ? { href: entryHref("notes", prev.id), label: "Previous", title: prev.data.title } : undefined}
+  pagerNext={next ? { href: entryHref("notes", next.id), label: "Next", title: next.data.title } : undefined}
+>
   <Content />
-</NotesLayout>
+</DocsLayout>

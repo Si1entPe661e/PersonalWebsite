@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry, type CollectionKey } from "astro:content";
-import { titleCaseSection } from "./site";
+import { titleCasePaperType, titleCaseSection } from "./site";
 
 function sortByDateValue<T extends { data: { date?: Date; updated?: Date } }>(entries: T[]) {
   return [...entries].sort((a, b) => {
@@ -20,6 +20,7 @@ export function getFeaturedEntries<T extends { data: { featured?: boolean } }>(e
 
 export function groupNotesBySection(entries: CollectionEntry<"notes">[]) {
   const groups = new Map<string, CollectionEntry<"notes">[]>();
+  const order = ["economics", "mathematics", "programming"];
 
   for (const entry of entries) {
     const key = entry.data.section;
@@ -28,15 +29,18 @@ export function groupNotesBySection(entries: CollectionEntry<"notes">[]) {
     groups.set(key, items);
   }
 
-  return Array.from(groups.entries()).map(([section, items]) => ({
-    section,
-    title: titleCaseSection(section),
-    items: [...items].sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)),
-  }));
+  return Array.from(groups.entries())
+    .sort(([left], [right]) => order.indexOf(left) - order.indexOf(right))
+    .map(([section, items]) => ({
+      section,
+      title: titleCaseSection(section),
+      items: [...items].sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)),
+    }));
 }
 
 export function groupPapersByType(entries: CollectionEntry<"papers">[]) {
   const groups = new Map<string, CollectionEntry<"papers">[]>();
+  const order = ["explainer", "replication", "reading note", "method note"];
 
   for (const entry of entries) {
     const key = entry.data.paperType;
@@ -45,11 +49,13 @@ export function groupPapersByType(entries: CollectionEntry<"papers">[]) {
     groups.set(key, items);
   }
 
-  return Array.from(groups.entries()).map(([paperType, items]) => ({
-    paperType,
-    title: paperType[0].toUpperCase() + paperType.slice(1),
-    items: sortByDateValue(items),
-  }));
+  return Array.from(groups.entries())
+    .sort(([left], [right]) => order.indexOf(left) - order.indexOf(right))
+    .map(([paperType, items]) => ({
+      paperType,
+      title: titleCasePaperType(paperType, true),
+      items: sortByDateValue(items),
+    }));
 }
 
 export function getAdjacentNotes(entries: CollectionEntry<"notes">[], id: string) {

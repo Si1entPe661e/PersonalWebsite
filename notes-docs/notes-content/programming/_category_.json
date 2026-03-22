@@ -1,0 +1,9 @@
+{
+  "label": "Programming",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Programming",
+    "description": "Workflow notes on coding assistants, reproducible environments, and the practical systems behind serious research work."
+  }
+}

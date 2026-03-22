@@ -3,6 +3,7 @@ export const site = {
   description:
     "An academic homepage for research, paper explainers, notes, essays, and working methods.",
   url: "https://example.com",
+  notesUrl: import.meta.env.PUBLIC_NOTES_URL ?? "/notes/",
   statement:
     "I study spatial economics, innovation, and the practical craft of doing research with code, notes, and careful reading.",
   role: "Researcher in Economics",
@@ -20,7 +21,7 @@ export const primaryNav = [
   { href: "/", label: "Home" },
   { href: "/research/", label: "Research" },
   { href: "/papers/", label: "Papers" },
-  { href: "/notes/", label: "Notes" },
+  { href: site.notesUrl, label: "Notes", external: isExternalUrl(site.notesUrl) },
   { href: "/essays/", label: "Essays" },
   { href: "/blog/", label: "Blog" },
   { href: "/about/", label: "About" },
@@ -29,6 +30,7 @@ export const primaryNav = [
 export const footerLinks = [
   { href: "/about/", label: "About" },
   { href: "/workflow/", label: "Workflow" },
+  { href: site.notesUrl, label: "Notes", external: isExternalUrl(site.notesUrl) },
   { href: "/rss.xml", label: "RSS" },
   { href: "https://scholar.google.com", label: "Google Scholar", external: true },
   { href: "https://github.com", label: "GitHub", external: true },
@@ -41,11 +43,24 @@ export function entryPath(id: string) {
 }
 
 export function entryHref(collection: RoutableCollection, id: string) {
+  if (collection === "notes") {
+    const path = `${entryPath(id)}/`;
+    return isExternalUrl(site.notesUrl) ? new URL(path, ensureTrailingSlash(site.notesUrl)).toString() : `/notes/${path}`;
+  }
+
   return `/${collection}/${entryPath(id)}/`;
 }
 
 export function pageHref(slug: string) {
   return slug === "about" ? "/about/" : `/${slug}/`;
+}
+
+export function ensureTrailingSlash(url: string) {
+  return url.endsWith("/") ? url : `${url}/`;
+}
+
+export function isExternalUrl(url: string) {
+  return /^https?:\/\//u.test(url);
 }
 
 export function formatLongDate(date?: Date) {
@@ -73,4 +88,22 @@ export function titleCaseSection(section: string) {
     mathematics: "Mathematics",
     programming: "Programming",
   }[section] ?? section;
+}
+
+export function titleCasePaperType(paperType: string, plural = false) {
+  const singular = {
+    explainer: "Explainer",
+    replication: "Replication",
+    "reading note": "Reading Note",
+    "method note": "Method Note",
+  }[paperType];
+
+  const pluralTitle = {
+    explainer: "Explainers",
+    replication: "Replications",
+    "reading note": "Reading Notes",
+    "method note": "Method Notes",
+  }[paperType];
+
+  return (plural ? pluralTitle : singular) ?? paperType;
 }

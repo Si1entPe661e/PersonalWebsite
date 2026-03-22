@@ -16,11 +16,21 @@ interface Props {
 }
 
 const { entry, headings } = Astro.props;
+const sidebarToggleId = "sidebar-toggle-research";
 ---
 
 <BaseLayout title={`${entry.data.title} | Research`} description={entry.data.description} theme="research" pageKind="detail">
   <div class="article-shell article-shell--research">
-    <div class="research-layout">
+    <div class="reading-frame">
+      <input class="reading-toggle" id={sidebarToggleId} type="checkbox" />
+      <div class="reading-frame__bar">
+        <label class="reading-toggle__button" for={sidebarToggleId}>
+          <span class="reading-toggle__label reading-toggle__label--collapse">Collapse sidebar</span>
+          <span class="reading-toggle__label reading-toggle__label--expand">Expand sidebar</span>
+        </label>
+      </div>
+
+      <div class="research-layout">
       <article class="article-main">
         <ProseHeader entry={entry} eyebrow="Research" />
         <div class="prose">
@@ -47,6 +57,7 @@ const { entry, headings } = Astro.props;
 
         <TableOfContents headings={headings} />
       </aside>
+      </div>
     </div>
   </div>
 </BaseLayout>

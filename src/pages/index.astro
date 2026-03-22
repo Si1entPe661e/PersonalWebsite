@@ -30,7 +30,7 @@ const primaryBlocks = [
   },
   {
     title: "Notes",
-    href: "/notes/",
+    href: site.notesUrl,
     description: "Economics, mathematics, and programming notes arranged like a compact personal library.",
     entries: notes.slice(0, 3).map((entry) => ({ href: entryHref("notes", entry.id), title: entry.data.title })),
   },
@@ -53,7 +53,7 @@ const notebookItems = [
   },
   {
     title: "Claude Code setup",
-    href: "/notes/programming/claude-code-setup/",
+    href: entryHref("notes", "programming/claude-code-setup.md"),
     description: "A practical note on prompts, shell habits, and how coding assistants fit into serious research work.",
   },
   {
@@ -63,7 +63,7 @@ const notebookItems = [
   },
   {
     title: "Method notes",
-    href: "/notes/economics/difference-in-differences-checklist/",
+    href: entryHref("notes", "economics/difference-in-differences-checklist.md"),
     description: "Compact reference notes for core empirical strategies, checks, and common failure modes.",
   },
 ];

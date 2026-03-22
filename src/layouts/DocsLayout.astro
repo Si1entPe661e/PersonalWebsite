@@ -1,0 +1,143 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+import ProseHeader from "../components/prose/ProseHeader.astro";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface NavItem {
+  href: string;
+  title: string;
+  active: boolean;
+}
+
+interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
+interface PagerLink {
+  href: string;
+  label: string;
+  title: string;
+}
+
+interface Props {
+  entry: CollectionEntry<"papers"> | CollectionEntry<"notes">;
+  headings: Heading[];
+  navGroups: NavGroup[];
+  sectionLabel: "Papers" | "Notes";
+  theme: "papers" | "notes";
+  contextLabel: string;
+  pagerPrev?: PagerLink;
+  pagerNext?: PagerLink;
+}
+
+const { entry, headings, navGroups, sectionLabel, theme, contextLabel, pagerPrev, pagerNext } = Astro.props;
+const navToggleId = `docs-nav-toggle-${theme}`;
+const outlineToggleId = `docs-outline-toggle-${theme}`;
+const outlineHeadings = headings.filter((heading) => heading.depth <= 3);
+---
+
+<BaseLayout title={`${entry.data.title} | ${sectionLabel}`} description={entry.data.description} theme={theme} pageKind="detail">
+  <div class:list={["article-shell", "docs-shell", `docs-shell--${theme}`]}>
+    <input class="docs-toggle docs-toggle--nav" id={navToggleId} type="checkbox" />
+    <input class="docs-toggle docs-toggle--outline" id={outlineToggleId} type="checkbox" />
+
+    <div class="docs-shell__layout">
+      <aside class="docs-nav" aria-label={`${sectionLabel} navigation`}>
+        <div class="docs-sidebar__top">
+          <div class="docs-sidebar__eyebrow">{sectionLabel}</div>
+          <label class="docs-toggle-button docs-toggle-button--nav" for={navToggleId}>
+            <span class="docs-toggle-button__icon" aria-hidden="true">≡</span>
+            <span class="docs-toggle-button__text docs-toggle-button__text--collapse">Collapse navigation</span>
+            <span class="docs-toggle-button__text docs-toggle-button__text--expand">Expand navigation</span>
+          </label>
+        </div>
+
+        <div class="docs-nav__body">
+          {navGroups.map((group) => (
+            <section class="docs-nav__group">
+              <h2>{group.title}</h2>
+              <ul>
+                {group.items.map((item) => (
+                  <li>
+                    <a class:list={["docs-nav__link", item.active && "is-active"]} href={item.href} aria-current={item.active ? "page" : undefined}>
+                      {item.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </aside>
+
+      <article class="docs-main">
+        <div class="docs-main__inner">
+          <nav class="docs-breadcrumbs" aria-label="Breadcrumb">
+            <a href={`/${theme}/`}>{sectionLabel}</a>
+            <span aria-hidden="true">/</span>
+            <span>{contextLabel}</span>
+          </nav>
+
+          <ProseHeader entry={entry} eyebrow={sectionLabel} />
+
+          <div class="prose docs-prose">
+            <slot />
+          </div>
+
+          {(pagerPrev || pagerNext) && (
+            <nav class="notes-pager docs-pager" aria-label="Adjacent documents">
+              <div>
+                {pagerPrev && (
+                  <a href={pagerPrev.href}>
+                    <span class="kicker">{pagerPrev.label}</span>
+                    <span>{pagerPrev.title}</span>
+                  </a>
+                )}
+              </div>
+              <div>
+                {pagerNext && (
+                  <a href={pagerNext.href}>
+                    <span class="kicker">{pagerNext.label}</span>
+                    <span>{pagerNext.title}</span>
+                  </a>
+                )}
+              </div>
+            </nav>
+          )}
+        </div>
+      </article>
+
+      <aside class="docs-outline" aria-label="On this page">
+        <div class="docs-sidebar__top">
+          <div class="docs-sidebar__eyebrow">Contents</div>
+          <label class="docs-toggle-button docs-toggle-button--outline" for={outlineToggleId}>
+            <span class="docs-toggle-button__icon" aria-hidden="true">≣</span>
+            <span class="docs-toggle-button__text docs-toggle-button__text--collapse">Collapse outline</span>
+            <span class="docs-toggle-button__text docs-toggle-button__text--expand">Expand outline</span>
+          </label>
+        </div>
+
+        <div class="docs-outline__body">
+          {outlineHeadings.length > 0 ? (
+            <ol class="docs-outline__list">
+              {outlineHeadings.map((heading) => (
+                <li class:list={[heading.depth > 2 && "is-nested"]}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p class="docs-outline__empty">This page is short enough to read without a sectional outline.</p>
+          )}
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

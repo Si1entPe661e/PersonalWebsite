@@ -1,27 +1,36 @@
 ---
 import { getCollection, render } from "astro:content";
-import ProseLayout from "../../layouts/ProseLayout.astro";
-import { entryPath } from "../../lib/site";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import { groupPapersByType } from "../../lib/content";
+import { entryHref, entryPath, titleCasePaperType } from "../../lib/site";
 
 export async function getStaticPaths() {
   const entries = await getCollection("papers", ({ data }) => !data.draft);
   return entries.map((entry) => ({
     params: { slug: entryPath(entry.id) },
-    props: { entry },
+    props: { entry, allEntries: entries },
   }));
 }
 
-const { entry } = Astro.props;
+const { entry, allEntries } = Astro.props;
 const { Content, headings } = await render(entry);
+const navGroups = groupPapersByType(allEntries).map((group) => ({
+  title: group.title,
+  items: group.items.map((item) => ({
+    href: entryHref("papers", item.id),
+    title: item.data.title,
+    active: item.id === entry.id,
+  })),
+}));
 ---
 
-<ProseLayout
+<DocsLayout
   entry={entry}
+  navGroups={navGroups}
+  contextLabel={titleCasePaperType(entry.data.paperType, true)}
   sectionLabel="Papers"
   theme="papers"
   headings={headings}
-  noteTitle="Reading note"
-  noteBody="Paper pages are treated as annotated desk files: the goal is to surface mechanism, assumptions, and what survives close reading."
 >
   <Content />
-</ProseLayout>
+</DocsLayout>
