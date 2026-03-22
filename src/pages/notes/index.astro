@@ -8,20 +8,34 @@ const notes = await getPublishedCollection("notes");
 const groups = groupNotesBySection(notes);
 ---
 
-<BaseLayout title="Notes | Li Zhicheng" description="A small academic library of economics, mathematics, and programming notes.">
-  <div class="section-shell">
+<BaseLayout title="Notes | Li Zhicheng" description="A small academic library of economics, mathematics, and programming notes." theme="notes" pageKind="index">
+  <div class="section-shell section-shell--notes">
     <SectionHero
       eyebrow="Notes"
       title="A compact library for economics, mathematics, and code"
       description="Notes are organized less like a chronological blog and more like shelves in a working library. Each shelf can grow into a longer book-shaped path over time."
     />
 
-    <div class="section-grid">
+    <div class="section-lead section-lead--notes">
+      <div class="section-lead__copy">
+        <p>The notes pages should feel like shelves in a small study. Each shelf has its own cadence, and entries are meant to be revisited rather than merely consumed once.</p>
+      </div>
+      <div class="section-lead__aside">
+        <span class="kicker">Shelves</span>
+        <ul class="section-badges">
+          <li>Economics</li>
+          <li>Mathematics</li>
+          <li>Programming</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-grid section-grid--notes">
       {
         groups.map((group) => (
-          <section class="section-panel">
+          <section class="section-panel section-panel--shelf">
             <div class="kicker">{group.title}</div>
-            <EntryList collection="notes" entries={group.items} />
+            <EntryList collection="notes" entries={group.items} variant="shelf" />
           </section>
         ))
       }

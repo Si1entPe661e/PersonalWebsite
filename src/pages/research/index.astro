@@ -7,13 +7,26 @@ import { getPublishedCollection } from "../../lib/content";
 const research = await getPublishedCollection("research");
 ---
 
-<BaseLayout title="Research | Li Zhicheng" description="Research agenda, working papers, and project pages.">
-  <div class="section-shell">
+<BaseLayout title="Research | Li Zhicheng" description="Research agenda, working papers, and project pages." theme="research" pageKind="index">
+  <div class="section-shell section-shell--research">
     <SectionHero
       eyebrow="Research"
       title="Projects, questions, and working papers"
       description="This section holds the slower academic core of the site: research themes, ongoing projects, and working papers that tie the rest of the notebook together."
     />
-    <EntryList collection="research" entries={research} />
+    <div class="section-lead section-lead--research">
+      <div class="section-lead__copy">
+        <p>The research pages should read like a dossier rather than a stream. They collect questions, mechanisms, empirical paths, and the papers still taking shape around them.</p>
+      </div>
+      <div class="section-lead__aside">
+        <span class="kicker">Current strands</span>
+        <ul class="section-badges">
+          <li>Spatial frictions</li>
+          <li>Knowledge mobility</li>
+          <li>Firm matching</li>
+        </ul>
+      </div>
+    </div>
+    <EntryList collection="research" entries={research} variant="dossier" />
   </div>
 </BaseLayout>

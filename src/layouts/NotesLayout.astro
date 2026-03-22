@@ -21,8 +21,8 @@ interface Props {
 const { entry, headings, prev, next } = Astro.props;
 ---
 
-<BaseLayout title={`${entry.data.title} | Notes`} description={entry.data.description}>
-  <div class="article-shell">
+<BaseLayout title={`${entry.data.title} | Notes`} description={entry.data.description} theme="notes" pageKind="detail">
+  <div class="article-shell article-shell--notes">
     <div class="notes-layout">
       <article class="article-main">
         <div class="breadcrumbs">Notes / {titleCaseSection(entry.data.section)}</div>
@@ -52,7 +52,7 @@ const { entry, headings, prev, next } = Astro.props;
       </article>
 
       <aside class="article-aside">
-        <div class="article-panel">
+        <div class="article-panel article-panel--shelf">
           <h2>Notebook lane</h2>
           <p>This note belongs to the {titleCaseSection(entry.data.section)} shelf and is written to be read as part of a larger archive.</p>
         </div>

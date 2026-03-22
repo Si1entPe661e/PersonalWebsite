@@ -8,20 +8,34 @@ const papers = await getPublishedCollection("papers");
 const groups = groupPapersByType(papers);
 ---
 
-<BaseLayout title="Papers | Li Zhicheng" description="Paper explainers, replications, and reading notes.">
-  <div class="section-shell">
+<BaseLayout title="Papers | Li Zhicheng" description="Paper explainers, replications, and reading notes." theme="papers" pageKind="index">
+  <div class="section-shell section-shell--papers">
     <SectionHero
       eyebrow="Papers"
       title="Explainers, replications, and reading notes"
       description="Papers are not treated as finished objects here. They are read, annotated, tested, and sometimes rebuilt so the ideas become usable."
     />
 
-    <div class="section-grid">
+    <div class="section-lead section-lead--papers">
+      <div class="section-lead__copy">
+        <p>This section behaves like a reading table: some entries explain, some replicate, and some exist to pin down identification or method before a paper becomes too persuasive on style alone.</p>
+      </div>
+      <div class="section-lead__aside">
+        <span class="kicker">Reading modes</span>
+        <ul class="section-badges">
+          <li>Explainers</li>
+          <li>Replications</li>
+          <li>Method notes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-grid section-grid--papers">
       {
         groups.map((group) => (
-          <section class="section-panel">
+          <section class="section-panel section-panel--annotated">
             <div class="kicker">{group.title}</div>
-            <EntryList collection="papers" entries={group.items} />
+            <EntryList collection="papers" entries={group.items} variant="annotated" />
           </section>
         ))
       }

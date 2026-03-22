@@ -18,8 +18,8 @@ interface Props {
 const { entry, headings } = Astro.props;
 ---
 
-<BaseLayout title={`${entry.data.title} | Research`} description={entry.data.description}>
-  <div class="article-shell">
+<BaseLayout title={`${entry.data.title} | Research`} description={entry.data.description} theme="research" pageKind="detail">
+  <div class="article-shell article-shell--research">
     <div class="research-layout">
       <article class="article-main">
         <ProseHeader entry={entry} eyebrow="Research" />
@@ -29,7 +29,7 @@ const { entry, headings } = Astro.props;
       </article>
 
       <aside class="article-aside">
-        <div class="article-panel">
+        <div class="article-panel article-panel--dossier">
           <h2>Project status</h2>
           <div class="entry-meta">
             {entry.data.status && <span>{entry.data.status}</span>}

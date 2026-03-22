@@ -13,15 +13,18 @@ interface Heading {
 interface Props {
   entry: CollectionEntry<"papers"> | CollectionEntry<"essays"> | CollectionEntry<"blog">;
   sectionLabel: string;
+  theme: "papers" | "essays" | "blog";
   headings: Heading[];
+  noteTitle?: string;
+  noteBody?: string;
 }
 
-const { entry, sectionLabel, headings } = Astro.props;
+const { entry, sectionLabel, theme, headings, noteTitle, noteBody } = Astro.props;
 ---
 
-<BaseLayout title={`${entry.data.title} | ${sectionLabel}`} description={entry.data.description}>
-  <div class="article-shell">
-    <div class="article-layout">
+<BaseLayout title={`${entry.data.title} | ${sectionLabel}`} description={entry.data.description} theme={theme} pageKind="detail">
+  <div class:list={["article-shell", `article-shell--${theme}`]}>
+    <div class:list={["article-layout", `article-layout--${theme}`]}>
       <article class="article-main">
         <ProseHeader entry={entry} eyebrow={sectionLabel} />
         <div class="prose">
@@ -30,6 +33,12 @@ const { entry, sectionLabel, headings } = Astro.props;
       </article>
 
       <aside class="article-aside">
+        {noteTitle && noteBody && (
+          <div class="article-panel article-panel--note">
+            <h2>{noteTitle}</h2>
+            <p>{noteBody}</p>
+          </div>
+        )}
         <TableOfContents headings={headings} />
       </aside>
     </div>

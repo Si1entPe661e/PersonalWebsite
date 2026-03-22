@@ -7,11 +7,15 @@ import { site } from "../lib/site";
 interface Props {
   title?: string;
   description?: string;
+  theme?: "home" | "research" | "papers" | "notes" | "essays" | "blog" | "about";
+  pageKind?: "home" | "index" | "detail" | "page";
 }
 
 const {
   title = `${site.title} | ${site.role}`,
   description = site.description,
+  theme = "home",
+  pageKind = "page",
 } = Astro.props;
 ---
 
@@ -32,7 +36,7 @@ const {
     />
     <title>{title}</title>
   </head>
-  <body>
+  <body data-theme={theme} data-page-kind={pageKind}>
     <div class="site-shell">
       <Header />
       <main class="site-main">

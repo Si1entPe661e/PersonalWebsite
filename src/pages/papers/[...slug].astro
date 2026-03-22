@@ -15,6 +15,13 @@ const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 ---
 
-<ProseLayout entry={entry} sectionLabel="Papers" headings={headings}>
+<ProseLayout
+  entry={entry}
+  sectionLabel="Papers"
+  theme="papers"
+  headings={headings}
+  noteTitle="Reading note"
+  noteBody="Paper pages are treated as annotated desk files: the goal is to surface mechanism, assumptions, and what survives close reading."
+>
   <Content />
 </ProseLayout>

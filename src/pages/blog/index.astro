@@ -7,13 +7,20 @@ import { getPublishedCollection } from "../../lib/content";
 const blog = await getPublishedCollection("blog");
 ---
 
-<BaseLayout title="Blog | Li Zhicheng" description="Short updates, project notes, and build logs.">
-  <div class="section-shell">
+<BaseLayout title="Blog | Li Zhicheng" description="Short updates, project notes, and build logs." theme="blog" pageKind="index">
+  <div class="section-shell section-shell--blog">
     <SectionHero
       eyebrow="Blog"
       title="Shorter updates and build logs"
       description="The blog is lighter on ceremony. It is for movement, experimentation, and brief records of what changed or what became newly interesting."
     />
-    <EntryList collection="blog" entries={blog} />
+
+    <div class="section-lead section-lead--blog">
+      <div class="section-lead__copy">
+        <p>The blog keeps the motion visible: smaller observations, build logs, and compact records that do not need the slower architecture of an essay.</p>
+      </div>
+    </div>
+
+    <EntryList collection="blog" entries={blog} variant="timeline" />
   </div>
 </BaseLayout>

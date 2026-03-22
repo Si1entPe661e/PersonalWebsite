@@ -15,6 +15,13 @@ const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 ---
 
-<ProseLayout entry={entry} sectionLabel="Blog" headings={headings}>
+<ProseLayout
+  entry={entry}
+  sectionLabel="Blog"
+  theme="blog"
+  headings={headings}
+  noteTitle="Field log"
+  noteBody="Blog entries remain lighter and more immediate. They are records of movement, not fully settled arguments."
+>
   <Content />
 </ProseLayout>

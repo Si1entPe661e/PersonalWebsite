@@ -3,17 +3,34 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import SectionHero from "../../components/listing/SectionHero.astro";
 import EntryList from "../../components/listing/EntryList.astro";
 import { getPublishedCollection } from "../../lib/content";
+import { entryHref, formatLongDate } from "../../lib/site";
 
 const essays = await getPublishedCollection("essays");
+const [leadEssay, ...essayArchive] = essays;
 ---
 
-<BaseLayout title="Essays | Li Zhicheng" description="Longer-form reflections and arguments.">
-  <div class="section-shell">
+<BaseLayout title="Essays | Li Zhicheng" description="Longer-form reflections and arguments." theme="essays" pageKind="index">
+  <div class="section-shell section-shell--essays">
     <SectionHero
       eyebrow="Essays"
       title="Longer reflections and viewpoint pieces"
       description="Essays are where arguments are allowed to breathe. They sit closer to editorial writing than to logging or note-taking."
     />
-    <EntryList collection="essays" entries={essays} />
+
+    {leadEssay && (
+      <article class="essay-lead">
+        <div class="kicker">Featured essay</div>
+        <div class="entry-meta">
+          {leadEssay.data.date && <span>{formatLongDate(leadEssay.data.date)}</span>}
+          {leadEssay.data.status && <span>{leadEssay.data.status}</span>}
+        </div>
+        <h2>
+          <a href={entryHref("essays", leadEssay.id)}>{leadEssay.data.title}</a>
+        </h2>
+        <p>{leadEssay.data.description}</p>
+      </article>
+    )}
+
+    {essayArchive.length > 0 && <EntryList collection="essays" entries={essayArchive} variant="essay" />}
   </div>
 </BaseLayout>

@@ -5,18 +5,19 @@ import { entryHref } from "../../lib/site";
 
 interface Props {
   collection: "research" | "papers" | "notes" | "essays" | "blog";
+  variant?: "default" | "dossier" | "annotated" | "shelf" | "essay" | "timeline";
   entries: Array<
     CollectionEntry<"research"> | CollectionEntry<"papers"> | CollectionEntry<"notes"> | CollectionEntry<"essays"> | CollectionEntry<"blog">
   >;
 }
 
-const { collection, entries } = Astro.props;
+const { collection, entries, variant = "default" } = Astro.props;
 ---
 
-<div class="entry-list">
+<div class:list={["entry-list", `entry-list--${variant}`]}>
   {
     entries.map((entry) => (
-      <article class="entry-card">
+      <article class:list={["entry-card", `entry-card--${variant}`]}>
         <div class="entry-card__top">
           <span class="kicker">{collection}</span>
           <EntryMeta entry={entry} />
