@@ -1,7 +1,7 @@
 ---
 title: Claude Code Setup for Research Work
 description: A practical note on how I think about coding assistants, shell habits, and keeping automation useful without losing judgment.
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Claude Code Setup for Research Work

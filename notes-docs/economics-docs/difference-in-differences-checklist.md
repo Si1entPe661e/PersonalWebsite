@@ -1,7 +1,7 @@
 ---
 title: Difference-in-Differences Checklist
 description: A quick working checklist for reading and writing difference-in-differences designs with more care.
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Difference-in-Differences Checklist

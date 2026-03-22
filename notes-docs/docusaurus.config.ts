@@ -31,16 +31,42 @@ const config: Config = {
     [
       'classic',
       {
-        docs: {
-          path: './notes-content',
-          routeBasePath: '/',
-          sidebarPath: './sidebars.ts',
-        },
+        docs: false,
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'economics',
+        path: './economics-docs',
+        routeBasePath: 'economics',
+        sidebarPath: './sidebarsEconomics.ts',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'mathematics',
+        path: './mathematics-docs',
+        routeBasePath: 'mathematics',
+        sidebarPath: './sidebarsMathematics.ts',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'programming',
+        path: './programming-docs',
+        routeBasePath: 'programming',
+        sidebarPath: './sidebarsProgramming.ts',
+      },
     ],
   ],
 
@@ -54,12 +80,9 @@ const config: Config = {
     navbar: {
       title: 'Notes',
       items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'notesSidebar',
-          position: 'left',
-          label: 'Library',
-        },
+        {to: '/economics/', label: 'Economics', position: 'left'},
+        {to: '/mathematics/', label: 'Mathematics', position: 'left'},
+        {to: '/programming/', label: 'Programming', position: 'left'},
         {
           href: mainSiteUrl,
           label: 'Back to main site',
@@ -72,18 +95,17 @@ const config: Config = {
       style: 'light',
       links: [
         {
-          title: 'Shelves',
+          title: 'Docs',
           items: [
-            {label: 'Economics', to: '/category/economics'},
-            {label: 'Mathematics', to: '/category/mathematics'},
-            {label: 'Programming', to: '/category/programming'},
+            {label: 'Economics', to: '/economics/'},
+            {label: 'Mathematics', to: '/mathematics/'},
+            {label: 'Programming', to: '/programming/'},
           ],
         },
         {
-          title: 'Reading paths',
+          title: 'Main site',
           items: [
-            {label: 'Reference notes', to: '/economics/spatial-equilibrium-foundations'},
-            {label: 'Workflow notes', to: '/programming/claude-code-setup'},
+            {label: 'Back to homepage', href: mainSiteUrl},
           ],
         },
       ],

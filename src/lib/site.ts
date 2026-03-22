@@ -53,7 +53,7 @@ export function entryHref(collection: RoutableCollection, id: string) {
 }
 
 export function noteSectionHref(section: string) {
-  return new URL(`category/${section}`, ensureTrailingSlash(site.notesDocsUrl)).toString();
+  return new URL(`${section}/`, ensureTrailingSlash(site.notesDocsUrl)).toString();
 }
 
 export function pageHref(slug: string) {
