@@ -1,7 +1,6 @@
 ---
 title: A Reproducible Research Environment
 description: Notes on project folders, shell routines, and file habits that make small empirical projects easier to revisit.
-sidebar_position: 3
 ---
 
 # A Reproducible Research Environment

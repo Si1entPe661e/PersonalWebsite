@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap");
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  font-family: "Source Sans 3", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  background: #faf9f6;
+  color: #1a1915;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-underline-offset: 0.16em;
+}
+
+main {
+  background: #fff;
+}
+
+aside {
+  background: #fcfbf8;
+}

@@ -1,7 +1,6 @@
 ---
 title: Spatial Equilibrium Foundations
 description: A compact note on the core intuition behind spatial equilibrium thinking and why it remains useful even outside textbook migration models.
-sidebar_position: 2
 ---
 
 # Spatial Equilibrium Foundations

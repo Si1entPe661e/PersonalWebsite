@@ -1,0 +1,28 @@
+---
+title: Notes Library
+description: A compact working library for economics, mathematics, and programming notes.
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+# One site, three growing shelves.
+
+This notes site is organized as three top-level documentation spaces. The goal is to keep each subject legible as it grows without turning the whole archive into a single endless sidebar.
+
+<CardGrid stagger>
+  <LinkCard
+    title="Economics"
+    href="/economics/"
+    description="Spatial economics, empirical strategy, and framework notes for applied work."
+  />
+  <LinkCard
+    title="Mathematics"
+    href="/mathematics/"
+    description="Reference notes for the mathematical tools that return across economics and quantitative work."
+  />
+  <LinkCard
+    title="Programming"
+    href="/programming/"
+    description="Workflow notes on coding assistants, reproducibility, and research systems."
+  />
+</CardGrid>

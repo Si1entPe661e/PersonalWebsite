@@ -1,7 +1,6 @@
 ---
 title: Linear Algebra for Economic Thinking
 description: Notes on the parts of linear algebra that keep returning in econometrics, optimization, and dynamic systems.
-sidebar_position: 2
 ---
 
 # Linear Algebra for Economic Thinking
